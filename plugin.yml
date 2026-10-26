@@ -1,0 +1,64 @@
+name: BetterProtector
+version: 1.0.0
+main: betterlite\betterprotector\BetterProtector
+api: 5.0.0
+author: BetterLite Team
+authors: [BetterLite Team]
+description: Advanced, high-performance area protection plugin for PocketMine-MP
+website: https://github.com/BetterLite/BetterProtector
+
+permissions:
+  betterprotector.admin:
+    default: op
+    description: Full administrative access to BetterProtector
+  betterprotector.bypass:
+    default: false
+    description: Bypass all area restrictions
+  iprotector.access:
+    default: false
+    description: Legacy iProtector bypass permission
+  betterprotector.command.area:
+    default: op
+    description: Access to the area command
+  betterprotector.command.area.bypass:
+    default: op
+    description: Allow toggling admin bypass mode
+  betterprotector.command.area.create:
+    default: op
+    description: Allow creating areas
+  betterprotector.command.area.delete:
+    default: op
+    description: Allow deleting areas
+  betterprotector.command.area.flag:
+    default: op
+    description: Allow setting area flags
+  betterprotector.command.area.whitelist:
+    default: op
+    description: Allow modifying area whitelists
+  betterprotector.command.area.pos1:
+    default: op
+    description: Allow setting position 1
+  betterprotector.command.area.pos2:
+    default: op
+    description: Allow setting position 2
+  betterprotector.command.area.wand:
+    default: op
+    description: Allow getting the selection wand
+  betterprotector.command.area.list:
+    default: op
+    description: Allow listing areas
+  betterprotector.command.area.info:
+    default: op
+    description: Allow viewing area information
+  betterprotector.command.area.tp:
+    default: op
+    description: Allow teleporting to area center
+  betterprotector.command.area.priority:
+    default: op
+    description: Allow setting area priority
+  betterprotector.command.area.msg:
+    default: op
+    description: Allow setting custom area messages
+  betterprotector.command.area.reload:
+    default: op
+    description: Allow reloading BetterProtector

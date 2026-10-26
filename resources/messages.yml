@@ -1,0 +1,63 @@
+# BetterProtector Messages Configuration
+# Author: BetterLite Team
+# Color codes: use & or §
+
+prefix: "&8[&bBetterProtector&8]&r "
+
+# Action blocked feedback
+action-blocked-edit: "&cYou cannot build or break blocks in this protected area!"
+action-blocked-touch: "&cYou cannot interact with blocks in this protected area!"
+action-blocked-pvp: "&cPvP combat is disabled in this area!"
+action-blocked-entry: "&cYou are not permitted to enter this area!"
+action-blocked-item-drop: "&cDropping items is disabled in this area!"
+action-blocked-item-pickup: "&cPicking up items is disabled in this area!"
+
+# Boundary notifications
+area-enter: "&aEntering: &f{name}"
+area-leave: "&cLeaving: &f{name}"
+
+# Selection & Wand
+pos1-set: "&aPosition 1 set to &f({x}, {y}, {z}) &ain world &f{world}&a."
+pos2-set: "&aPosition 2 set to &f({x}, {y}, {z}) &ain world &f{world}&a."
+pos-volume: "&eSelection size: &f{width} x {height} x {length} &7({volume} blocks)"
+wand-given: "&aYou have received the selection wand! &7(Left-click block: Pos 1, Right-click block: Pos 2)"
+wand-name: "&b&lBetterProtector Wand&r"
+wand-lore-1: "&7Left-Click a block: &fSet Position 1"
+wand-lore-2: "&7Right-Click a block: &fSet Position 2"
+
+# Command feedback
+area-create-success: "&aArea &f{name} &asuccessfully created! &7({volume} blocks in {world})"
+area-create-exists: "&cAn area named &f{name} &calready exists!"
+area-create-invalid-name: "&cInvalid area name. Only letters, numbers, hyphens, and underscores are allowed (2-32 chars)."
+area-create-no-selection: "&cYou must select both Position 1 and Position 2 first! Use &e/area wand &cor &e/area pos1 &cand &e/area pos2&c."
+area-create-different-worlds: "&cPosition 1 and Position 2 must be in the same world!"
+
+area-delete-success: "&aArea &f{name} &ahas been permanently deleted."
+area-delete-not-found: "&cArea &f{name} &cdoes not exist."
+
+area-flag-updated: "&aFlag &f{flag} &aset to &f{value} &afor area &f{name}&a."
+area-flag-invalid: "&cInvalid flag '&f{flag}&c'. Available flags: &e{flags}"
+area-flag-invalid-value: "&cInvalid value '&f{value}&c'. Use &aallow&c/&ctrue &cor &cdeny&c/&cfalse&c."
+
+area-whitelist-added: "&aAdded &f{player} &ato the whitelist of area &f{name}&a."
+area-whitelist-already: "&ePlayer &f{player} &eis already whitelisted in area &f{name}&e."
+area-whitelist-removed: "&aRemoved &f{player} &afrom the whitelist of area &f{name}&a."
+area-whitelist-not-found: "&cPlayer &f{player} &cis not in the whitelist of area &f{name}&c."
+area-whitelist-list: "&bWhitelist for area &f{name}&b: &f{list}"
+area-whitelist-empty: "&7There are no players whitelisted in area &f{name}&7."
+
+area-tp-success: "&aTeleported to the center of area &f{name}&a."
+area-tp-world-not-loaded: "&cCannot teleport: world &f{world} &cis not loaded."
+
+area-priority-updated: "&aPriority for area &f{name} &aset to &f{priority}&a."
+
+area-msg-updated: "&aCustom {type} message for area &f{name} &aupdated."
+area-msg-cleared: "&aCustom {type} message for area &f{name} &acleared."
+
+area-reload-success: "&aConfiguration and areas reloaded successfully!"
+
+bypass-enabled: "&aBypass mode enabled. You can now build and interact in all protected areas."
+bypass-disabled: "&cBypass mode disabled. Area protection restrictions now apply to you."
+
+error-only-player: "&cThis command can only be used in-game by a player."
+error-no-permission: "&cYou do not have permission to execute this command."

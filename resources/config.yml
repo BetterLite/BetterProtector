@@ -1,0 +1,46 @@
+# BetterProtector Configuration
+# Developed with precision by BetterLite Team
+
+# General plugin settings
+settings:
+  # Notification type when entering or leaving a protected area
+  # Options: "actionbar", "title", "popup", "chat", "none"
+  notification-type: "actionbar"
+
+  # Whether to alert players when their action is blocked (breaking, placing, touching, pvp, etc.)
+  notify-action-blocked: true
+
+  # Method to alert when an action is blocked: "popup", "actionbar", "chat"
+  action-blocked-notification: "popup"
+
+  # Item identifier used as the selection wand (e.g., "wooden_axe", "stick")
+  wand-item: "wooden_axe"
+
+  # Auto-save interval in ticks (20 ticks = 1s, 6000 ticks = 5 minutes)
+  # Set to 0 to disable auto-save.
+  auto-save-interval: 6000
+
+# Default flags applied to the wilderness (areas outside any defined protected zone)
+default-world-flags:
+  edit: true
+  touch: true
+  pvp: true
+  god: false
+  explosion: true
+  decay: true
+  enter: true
+  flight: true
+  item-drop: true
+  item-pickup: true
+
+# Per-world wilderness flag overrides
+# Flags defined here override default-world-flags for that specific world.
+# Example:
+# worlds:
+#   lobby:
+#     edit: false
+#     touch: false
+#     pvp: false
+#     god: true
+#     explosion: false
+worlds: {}
