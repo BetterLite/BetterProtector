@@ -31,7 +31,7 @@ class PrioritySubCommand extends BaseSubCommand {
     protected function configure(): void {
         $this->setPermission("betterprotector.command.area.priority");
         $this->registerArgument(0, new StringArgument("name"));
-        $this->registerArgument(1, new IntegerArgument("priority"));
+        $this->registerArgument(1, new IntegerArgument("priority", false, -1000000, 1000000));
     }
 
     public function onRun(CommandContext $context): void {
@@ -46,6 +46,13 @@ class PrioritySubCommand extends BaseSubCommand {
         }
 
         $priority = (int) $context->getArg("priority");
+
+        // IntegerArgument already enforces min/max, but guard defensively.
+        if ($priority < -1000000 || $priority > 1000000) {
+            $sender->sendMessage("§cPriority must be between -1000000 and 1000000.");
+            return;
+        }
+
         $area->setPriority($priority);
         $plugin->getAreaManager()->save();
 

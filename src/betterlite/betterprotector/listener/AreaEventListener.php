@@ -228,8 +228,13 @@ class AreaEventListener implements Listener {
         $player = $event->getPlayer();
         $areaManager = $this->plugin->getAreaManager();
 
-        // Entry restriction check
-        if (!$areaManager->canEnter($to, $player)) {
+        // Entry restriction check — only enforce when actually ENTERING an area,
+        // not for movement within the same area (otherwise players already inside
+        // a no-enter area would be frozen).
+        $fromArea = $areaManager->getAreaAt($from);
+        $toArea   = $areaManager->getAreaAt($to);
+
+        if ($fromArea !== $toArea && !$areaManager->canEnter($to, $player)) {
             $event->setTo($from);
             $this->notifyBlocked($player, "action-blocked-entry");
             return;
@@ -237,7 +242,6 @@ class AreaEventListener implements Listener {
 
         // Area border transition notification
         $session = $this->plugin->getSessionManager()->getSession($player);
-        $toArea = $areaManager->getAreaAt($to);
         $toAreaName = $toArea?->getName();
 
         if ($session->getLastAreaName() !== $toAreaName) {

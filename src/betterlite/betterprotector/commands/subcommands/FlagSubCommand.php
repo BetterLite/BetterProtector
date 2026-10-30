@@ -34,7 +34,11 @@ class FlagSubCommand extends BaseSubCommand {
         $this->setPermission("betterprotector.command.area.flag");
         $this->registerArgument(0, new StringArgument("area"));
         $this->registerArgument(1, new EnumArgument("flag", Flag::all(), true));
-        $this->registerArgument(2, new EnumArgument("value", ["allow", "deny", "true", "false", "on", "off"], true));
+        // Values must match everything Flag::parseValue() accepts.
+        $this->registerArgument(2, new EnumArgument("value", [
+            "allow", "deny", "true", "false", "on", "off",
+            "enable", "disable", "enabled", "disabled", "yes", "no", "1", "0"
+        ], true));
     }
 
     public function onRun(CommandContext $context): void {

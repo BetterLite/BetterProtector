@@ -12,8 +12,6 @@ use betterlite\betterprotector\listener\AreaEventListener;
 use betterlite\betterprotector\listener\WandEventListener;
 use betterlite\betterprotector\session\SessionManager;
 use betterlite\betterprotector\utils\Messages;
-use pocketmine\command\Command;
-use pocketmine\command\CommandSender;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
 use pocketmine\utils\Config;
@@ -26,7 +24,7 @@ use function mkdir;
  */
 class BetterProtector extends PluginBase {
 
-    private static self $instance;
+    private static ?self $instance = null;
 
     private AreaRepository $repository;
     private AreaManager $areaManager;
@@ -34,6 +32,9 @@ class BetterProtector extends PluginBase {
     private AreaCommand $areaCommand;
 
     public static function getInstance(): self {
+        if (self::$instance === null) {
+            throw new \RuntimeException("BetterProtector is not enabled yet.");
+        }
         return self::$instance;
     }
 
@@ -93,6 +94,15 @@ class BetterProtector extends PluginBase {
         if (isset($this->sessionManager)) {
             $this->sessionManager->clear();
         }
+
+        // Reset the PacketHooker static registration flag so a subsequent
+        // enable (e.g. /reload) re-registers the listener.
+        PacketHooker::unregister();
+
+        // Clear singleton reference to avoid stale instance after disable.
+        if (self::$instance === $this) {
+            self::$instance = null;
+        }
     }
 
     public function reload(): void {
@@ -100,15 +110,6 @@ class BetterProtector extends PluginBase {
         $messagesConfig = new Config($this->getDataFolder() . "messages.yml", Config::YAML);
         Messages::init($messagesConfig);
         $this->areaManager->load();
-    }
-
-    public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
-        if ($command->getName() === "area") {
-            $this->areaCommand->execute($sender, $label, $args);
-            return true;
-        }
-
-        return false;
     }
 
     public function getAreaManager(): AreaManager {

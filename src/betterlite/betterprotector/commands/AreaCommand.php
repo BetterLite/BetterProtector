@@ -60,7 +60,7 @@ class AreaCommand extends BaseCommand {
     }
 
     public function onRun(CommandContext $context): void {
-        $help = $this->subCommandsByName["help"] ?? null;
+        $help = $this->getSubCommands()["help"] ?? null;
         if ($help !== null) {
             $help->onRun($context);
         }

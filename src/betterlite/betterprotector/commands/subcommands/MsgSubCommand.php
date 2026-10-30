@@ -54,7 +54,6 @@ class MsgSubCommand extends BaseSubCommand {
 
         switch ($type) {
             case "enter":
-            case "entry":
                 if ($msgStr === null || $msgStr === "") {
                     $sender->sendMessage("§cPlease specify the enter message.");
                     return;
@@ -65,7 +64,6 @@ class MsgSubCommand extends BaseSubCommand {
                 break;
 
             case "leave":
-            case "exit":
                 if ($msgStr === null || $msgStr === "") {
                     $sender->sendMessage("§cPlease specify the leave message.");
                     return;

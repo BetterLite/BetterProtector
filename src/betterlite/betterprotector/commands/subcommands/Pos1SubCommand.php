@@ -50,6 +50,14 @@ class Pos1SubCommand extends BaseSubCommand {
         $y = $context->getArg("y");
         $z = $context->getArg("z");
 
+        // Require all three coordinates or none — avoid silently ignoring partial input.
+        $givenCount = ($x !== null ? 1 : 0) + ($y !== null ? 1 : 0) + ($z !== null ? 1 : 0);
+        if ($givenCount > 0 && $givenCount < 3) {
+            $sender->sendMessage("§cYou must provide all three coordinates (x y z) or none at all.");
+            $sender->sendMessage("§eCorrect usage: §f/area pos1 §7or §f/area pos1 <x> <y> <z>");
+            return;
+        }
+
         if ($x !== null && $y !== null && $z !== null) {
             $pos = new Position((float) $x, (float) $y, (float) $z, $world);
         } else {

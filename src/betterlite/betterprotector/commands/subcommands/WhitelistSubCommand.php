@@ -86,8 +86,6 @@ class WhitelistSubCommand extends BaseSubCommand {
                 break;
 
             case "remove":
-            case "delete":
-            case "del":
                 if ($target === null || (string)$target === "") {
                     $sender->sendMessage("§cUsage: /area whitelist " . $area->getName() . " remove <player>");
                     return;

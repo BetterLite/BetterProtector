@@ -39,6 +39,14 @@ class PacketHooker implements Listener {
         self::$registered = true;
     }
 
+    /**
+     * Reset registration state. Must be called on plugin disable so that
+     * a subsequent enable (e.g. /reload) re-registers the listener.
+     */
+    public static function unregister(): void {
+        self::$registered = false;
+    }
+
     public function onDataPacketSend(DataPacketSendEvent $event): void {
         $packets = $event->getPackets();
 
@@ -76,29 +84,46 @@ class PacketHooker implements Listener {
 
         foreach ($packets as $packet) {
             if ($packet instanceof AvailableCommandsPacket) {
-                $disassembled = AvailableCommandsPacketDisassembler::disassemble($packet);
-                $hasCommando = false;
+                try {
+                    $disassembled = AvailableCommandsPacketDisassembler::disassemble($packet);
+                    $hasCommando = false;
 
-                foreach ($disassembled->commandData as $data) {
-                    $cmd = Server::getInstance()->getCommandMap()->getCommand($data->name);
-                    if ($cmd instanceof BaseCommand) {
-                        $hasCommando = true;
-                        if (!$cmd->testPermissionSilent($player)) {
-                            $data->overloads = [];
-                            continue;
-                        }
+                    foreach ($disassembled->commandData as $data) {
+                        $cmd = Server::getInstance()->getCommandMap()->getCommand($data->name);
+                        if ($cmd instanceof BaseCommand) {
+                            $hasCommando = true;
+                            if (!$cmd->testPermissionSilent($player)) {
+                                $data->overloads = [];
+                                continue;
+                            }
 
-                        $overloads = self::generateOverloads($cmd, $player);
-                        if (!empty($overloads)) {
-                            $data->overloads = $overloads;
+                            $overloads = self::generateOverloads($cmd, $player);
+                            if (!empty($overloads)) {
+                                $data->overloads = $overloads;
+                            }
                         }
                     }
-                }
 
-                if ($hasCommando) {
-                    $newPackets[] = AvailableCommandsPacketAssembler::assemble(array_values($disassembled->commandData), [], []);
-                    $modified = true;
-                    continue;
+                    if ($hasCommando) {
+                        // BUG-FIX: preserve unused hard enums and soft enums so that
+                        // other plugins' commands are not broken by the reassembly.
+                        $newPackets[] = AvailableCommandsPacketAssembler::assemble(
+                            array_values($disassembled->commandData),
+                            array_values($disassembled->unusedHardEnums),
+                            array_values($disassembled->unusedSoftEnums)
+                        );
+                        $modified = true;
+                        continue;
+                    }
+                } catch (\Throwable $e) {
+                    // Never crash the server because of a packet hook failure —
+                    // fall through and send the original packet untouched.
+                    $plugin = $player->getServer()->getPluginManager()->getPlugin("BetterProtector");
+                    if ($plugin !== null) {
+                        $plugin->getLogger()->error(
+                            "[CommandoX] Failed to inject tab-completion data: " . $e->getMessage()
+                        );
+                    }
                 }
             }
 
